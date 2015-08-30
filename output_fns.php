@@ -1,12 +1,15 @@
 <?php
 
-function do_html_header($title){
-    if (!$_SESSION['items']) {
+function do_html_header($title)
+{
+
+    if (@ !$_SESSION['items']) {
         $_SESSION['items'] = '0';
     }
-    if (!$_SESSION['total_price']) {
+    if (@ !$_SESSION['total_price']) {
         $_SESSION['total_price'] = '0.00';
     }
+
 ?>
 
 <html>
@@ -21,7 +24,15 @@ function do_html_header($title){
             <td>Total books: <?php echo $_SESSION['items']; ?> <br />
             Total price: <?php echo $_SESSION['total_price']; ?></td>
 
-            <td><?php display_button("show_cart.php", "show-cart", "Show Cart"); ?></td>
+            <td>
+                <?php
+                if (isset($_SESSION['admin_user'])) {
+                    display_button("logout.php", "log-out", "Log Out");
+                } else {
+                    display_button("show_cart.php", "show-cart", "Show Cart");
+                }
+                ?>
+            </td>
         </tr>
     </table>
     <h1><?php echo $title; ?></h1>
@@ -30,7 +41,11 @@ function do_html_header($title){
 <?php
 }
 
-function do_html_footer(){
+function do_html_footer() {
+    if (!isset($_SESSION['admin_user'])) {
+        do_html_url('login.php', 'For administrator');
+        echo "<br />";
+    }
 ?>
 </body>
 </html>
@@ -40,7 +55,7 @@ function do_html_footer(){
 function display_button($url, $description, $name) {
     echo "<a href=\"".$url."\">" .
         "<img src=\"".$description.".png\" alt=\"".$name."\">".
-        "</a>";
+        "</a><br />";
 }
 
 function display_categories($cat_array) {
@@ -149,6 +164,14 @@ function display_cart($cart, $change = true, $images = 1)
 
 function do_html_url($url, $title) {
     echo "<a href=\"".$url."\">".$title."</a>";
+}
+
+function display_admin_menu() {
+?>
+    <a href="index.php">Go to main website</a><br />
+    <a href="insert_category_form.php">Add new category</a><br />
+    <a href="insert_book_form.php">Add new book</a><br />
+<?php
 }
 
 ?>

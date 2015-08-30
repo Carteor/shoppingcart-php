@@ -2,7 +2,7 @@
 require_once('book_sc_fns.php');
 session_start();
 
-if ($_POST['username'] && $_POST['passwd']) {
+if (isset($_POST['username']) && isset($_POST['passwd'])) {
     $username = $_POST['username'];
     $passwd = $_POST['passwd'];
 

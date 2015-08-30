@@ -86,4 +86,47 @@ function calculate_items($cart) {
     }
     return $items;
 }
+
+function insert_book($isbn, $title, $author, $catid, $price, $description) {
+    $conn = db_connect();
+
+    $query = "SELECT * FROM books
+      WHERE isbn = '$isbn'";
+    $result = $conn->query($query);
+
+    if ($result && ($result->num_rows > 0)) {
+        echo "This book already exists.<br />";
+    } else {
+        $query = "INSERT INTO books VALUES (
+          '".$isbn."', '".$author."', '".$title."', '".$catid."',
+          '".$price."', '".$description."')";
+        if (!$result = $conn->query($query)) {
+            return false;
+        } else {
+            echo "Book added";
+            return true;
+        }
+    }
+}
+
+function insert_category($catname) {
+    $conn = db_connect();
+
+    $query = "SELECT * FROM categories
+      WHERE catname = '$catname'";
+    $result = $conn->query($query);
+
+    if ($result && ($result->num_rows > 0)) {
+        echo "This category already exists.<br />";
+    } else {
+        $query = "INSERT INTO categories VALUES (DEFAULT, '".$catname."')";
+        if (! $result = $conn->query($query)) {
+            return false;
+        } else {
+            echo "Category added";
+            return true;
+        }
+    }
+}
+
 ?>
