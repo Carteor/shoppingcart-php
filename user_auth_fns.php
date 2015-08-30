@@ -1,7 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: carte
- * Date: 27.08.2015
- * Time: 21:34
- */
+
+function check_admin_user() {
+    if (isset($_SESSION['admin_user'])) {
+        return true;
+    }
+    return false;
+}
+
+?>

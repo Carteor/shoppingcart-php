@@ -1,5 +1,6 @@
 <?php
 require ('book_sc_fns.php');
+
 session_start();
 do_html_header("Welcome to BUKVOFIL shop!");
 

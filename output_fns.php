@@ -7,28 +7,45 @@ function do_html_header($title){
     if (!$_SESSION['total_price']) {
         $_SESSION['total_price'] = '0.00';
     }
+?>
 
-    ?>
 <html>
 <head>
-    <title>$title</title>
+    <title><?php echo $title; ?></title>
 </head>
-    <?php
+<body>
+    <table>
+        <tr>
+            <td><img src="logo.png"></td>
+
+            <td>Total books: <?php echo $_SESSION['items']; ?> <br />
+            Total price: <?php echo $_SESSION['total_price']; ?></td>
+
+            <td><?php display_button("show_cart.php", "show-cart", "Show Cart"); ?></td>
+        </tr>
+    </table>
+    <h1><?php echo $title; ?></h1>
+
+
+<?php
 }
 
 function do_html_footer(){
-    ?>
+?>
+</body>
 </html>
     <?php
 }
 
 function display_button($url, $description, $name) {
-    echo "<a href=\"".$url."\">".$name."</a>";
+    echo "<a href=\"".$url."\">" .
+        "<img src=\"".$description.".png\" alt=\"".$name."\">".
+        "</a>";
 }
 
 function display_categories($cat_array) {
     if (!is_array($cat_array)) {
-        echo "There are currently no available categories<br />";
+        echo "<i>There are currently no available categories.</i><br />";
         return;
     }
 
@@ -38,6 +55,26 @@ function display_categories($cat_array) {
         $title = $row['catname'];
         echo "<li>";
         do_html_url($url, $title);
+        echo "</li>";
+    }
+    echo "</ul>";
+    echo "<hr />";
+}
+
+function display_books($book_array) {
+    if (!(is_array($book_array))) {
+        echo "<i>There are currently no available books.</i><br />";
+        return;
+    }
+
+    echo "<ul>";
+    foreach ($book_array as $row) {
+        $url = "show_book.php?isbn=".($row['isbn']);
+        $title = $row['title'];
+        $author = $row['author'];
+        echo "<li>";
+        do_html_url($url, $title);
+        echo " author: ".$author;
         echo "</li>";
     }
     echo "</ul>";
@@ -109,4 +146,9 @@ function display_cart($cart, $change = true, $images = 1)
     }
     echo "</form></table>";
 }
+
+function do_html_url($url, $title) {
+    echo "<a href=\"".$url."\">".$title."</a>";
+}
+
 ?>
