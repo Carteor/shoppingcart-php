@@ -23,7 +23,7 @@ function display_book_form($book = '') {
             <tr>
                 <td>Author: </td>
                 <td><input type="text" name="title" value="<?php
-                    echo $dit ? $book['title'] : '';
+                    echo $edit ? $book['title'] : '';
                 ?>"/></td>
             </tr>
             <tr>

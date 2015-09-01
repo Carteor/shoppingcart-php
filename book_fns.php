@@ -129,4 +129,15 @@ function insert_category($catname) {
     }
 }
 
+function delete_book($isbn) {
+    $conn = db_connect();
+    $query = "DELETE FROM books
+        WHERE isbn = '".$isbn."'";
+    $result = $conn->query($query);
+    if (!$result) {
+        return false;
+    }
+    return true;
+}
+
 ?>
