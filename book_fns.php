@@ -140,4 +140,29 @@ function delete_book($isbn) {
     return true;
 }
 
+function edit_book($isbn, $title, $author, $catid, $price, $description, $old_isbn)
+{
+    $conn = db_connect();
+
+    if ($isbn != $old_isbn) {
+        $query = "UPDATE books
+                    SET isbn = '".$isbn."'
+                    WHERE isbn = '".$old_isbn."'";
+        $conn->query($query);
+    }
+    $query = "UPDATE books
+        SET
+          title = '" . $title . "',
+          author = '" . $author . "',
+          catid = '" . $catid . "',
+          price = '" . $price . "',
+          description = '" . $description . "'
+        WHERE isbn = '" . $isbn . "'";
+    if ($conn->query($query)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 ?>

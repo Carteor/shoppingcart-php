@@ -1,4 +1,8 @@
 <?php
+session_start();
+if ($_SESSION['admin_user']) {
+    header('Location: admin.php');
+}
 include('book_sc_fns.php');
 do_html_header("Administration");
 ?>
